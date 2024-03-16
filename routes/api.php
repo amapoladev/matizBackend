@@ -1,6 +1,7 @@
 <?php
 
-use App\Http\Api\Controllers\UserController;
+use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\Api\IntensityController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -14,4 +15,12 @@ Route::controller(UserController::class)->group(function () {
     Route::get('/users/{id}', [UserController::class, 'show']);
     Route::put('/users/{id}', [UserController::class, 'update']);
     Route::delete('/users/{id}', [UserController::class, 'destroy']);
+});
+
+Route::controller(IntensityController::class)->group(function () {
+    Route::get('/intensities', 'index');
+    Route::get('/intensities/{id}', [IntensityController::class, 'show']);
+    Route::post('/intensities', [IntensityController::class, 'store']);
+    Route::put('/intensities/{id}', [IntensityController::class, 'update']);
+    Route::delete('/intensities/{id}', [IntensityController::class, 'destroy']);
 });

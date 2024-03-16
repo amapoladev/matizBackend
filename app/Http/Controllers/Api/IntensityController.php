@@ -5,54 +5,67 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Intensity;
 use Illuminate\Http\Request;
-use Exception;
+use FFI\Exception;
 
 class IntensityController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        {
-            try {
-                $intensities = Intensity::all();
-                return response()->json(['status' => 200, 'data' => $intensities]);
-            } catch (Exception $e) {
-                return response()->json(['status' => 204, 'message' => $e->getMessage()], 204);
-            }
+        try {
+            $intensities = Intensity::all();
+            return response()->json(['intensities' => $intensities]);
+        } catch (Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
         }
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+    public function show($id)
+    {
+        try {
+            $intensity = Intensity::findOrFail($id);
+            return response()->json(['intensity' => $intensity]);
+        } catch (Exception $e) {
+            return response()->json(['error' => 'Intensity not found'], 404);
+        }
+    }
+
     public function store(Request $request)
     {
-        //
+        try {
+            $request->validate([
+                'intensity' => 'required|string',
+            ]);
+
+            $intensity = Intensity::create($request->only('intensity'));
+            return response()->json(['intensity' => $intensity], 201);
+        } catch (Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function update(Request $request, $id)
     {
-        //
+        try {
+            $request->validate([
+                'intensity' => 'required|string',
+            ]);
+
+            $intensity = Intensity::findOrFail($id);
+            $intensity->update($request->only('intensity'));
+            return response()->json(['intensity' => $intensity]);
+        } catch (Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function destroy($id)
     {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        try {
+            $intensity = Intensity::findOrFail($id);
+            $intensity->delete();
+            return response()->json(['message' => 'Intensity deleted successfully'], 204);
+        } catch (Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
     }
 }
