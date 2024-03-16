@@ -12,4 +12,9 @@ class emotion extends Model
     protected $fillable = [
         'emotion',
     ];
+    
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'users_emotions', 'emotion_id', 'user_id');
+    }
 }

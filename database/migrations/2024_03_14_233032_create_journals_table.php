@@ -12,11 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('journals', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->bigIncrements('journals_id');
             $table->unsignedBigInteger('user_id');
             $table->string('feelingsnotes');
             $table->date('date');
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('user_id')->references('user_id')->on('users');
             $table->timestamps();
         });
     }

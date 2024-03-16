@@ -11,7 +11,8 @@ class DatabaseSeeder extends Seeder
         $this->call([
             UserSeeder::class,
             IntensitySeeder::class,
-            EmotionSeeder::class
+            EmotionSeeder::class,
+            UserEmotionSeeder::class
         ]);
     }
 }
