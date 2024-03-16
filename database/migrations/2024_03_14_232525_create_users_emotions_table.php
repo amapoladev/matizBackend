@@ -11,13 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('journals', function (Blueprint $table) {
-            $table->bigIncrements('id');
+        Schema::create('users_emotions', function (Blueprint $table) {
             $table->unsignedBigInteger('user_id');
-            $table->string('feelingsnotes');
-            $table->date('date');
+            $table->unsignedBigInteger('emotion_id');
             $table->foreign('user_id')->references('id')->on('users');
-            $table->timestamps();
+            $table->foreign('emotion_id')->references('id')->on('emotions');
+
+            $table->primary(['user_id', 'emotion_id']);
+            $table->timestamps(); 
         });
     }
 
@@ -26,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('journals');
+        Schema::dropIfExists('users_emotions');
     }
 };
