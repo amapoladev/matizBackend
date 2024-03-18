@@ -26,6 +26,7 @@ class UserEmotionFactory extends Factory
         return [
             'user_id' => \App\Models\User::inRandomOrder()->first()->id,
             'emotion_id' => \App\Models\Emotion::inRandomOrder()->first()->id,
+            'intensity' => $this->faker->randomElement(['alta', 'media', 'baja']),
         ];
     }
 }

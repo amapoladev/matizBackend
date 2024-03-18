@@ -11,5 +11,10 @@ class UserEmotion extends Model
 
     protected $table = 'users_emotions';
 
-    protected $fillable = ['user_id', 'emotion_id'];
+    protected $fillable = [
+        'user_id',
+        'emotion_id',
+        'intensity',
+        'journal_date',
+    ];
 }

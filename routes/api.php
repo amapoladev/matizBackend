@@ -4,7 +4,7 @@ use App\Http\Controllers\Api\EmotionController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\IntensityController;
 use App\Http\Controllers\Api\JournalController;
-use App\Http\Controllers\UserEmotionController;
+use App\Http\Controllers\Api\UserEmotionController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -36,13 +36,10 @@ Route::controller(EmotionController::class)->group(function () {
     Route::delete('/emotions/{id}', [EmotionController::class, 'destroy']);
 });
 
-// Route::controller(UserEmotionController::class)->group(function () {
-//     Route::get('/usersemotions', 'index');
-//     Route::get('/usersemotions/{id}', [UserEmotionController::class, 'show']);
-//     Route::post('/usersemotions', [UserEmotionController::class, 'store']);
-//     Route::put('/usersemotions/{id}', [UserEmotionController::class, 'update']);
-//     Route::delete('/usersemotions/{id}', [UserEmotionController::class, 'destroy']);
-// });
+Route::get('/user-emotions', [UserEmotionController::class, 'index']);
+Route::post('/user-emotions', [UserEmotionController::class, 'store']);
+Route::put('/user-emotions/{id}', [UserEmotionController::class, 'update']);
+Route::delete('/user-emotions/{id}', [UserEmotionController::class, 'destroy']);
 
 Route::controller(JournalController::class)->group(function () {
     Route::get('/journals', 'index');

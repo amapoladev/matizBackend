@@ -25,7 +25,7 @@ class JournalFactory extends Factory
         return [
             'user_id' => User::factory(),
             'feelingsnotes' => $this->faker->text,
-            'date' => $this->faker->date
+            'journal_date' => $this->faker->unique()->date,
         ];
     }
 }

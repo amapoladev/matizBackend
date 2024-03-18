@@ -12,11 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('journals', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->id();
             $table->unsignedBigInteger('user_id');
             $table->string('feelingsnotes');
-            $table->date('date');
+            $table->date('journal_date'); // Columna para la fecha del diario
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->unique(['user_id', 'journal_date']); // Clave primaria compuesta
             $table->timestamps();
         });
     }

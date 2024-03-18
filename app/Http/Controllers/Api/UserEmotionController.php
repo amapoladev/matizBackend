@@ -3,30 +3,75 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Models\UserEmotion;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Http\Request;
 
 class UserEmotionController extends Controller
 {
-    public function index()
+    /**
+     * Display a listing of the resource.
+     */
+    public function index($user_id)
     {
-        try {
-            $userEmotions = UserEmotion::with('user', 'emotion')->get();
-            return response()->json(['userEmotions' => $userEmotions]);
-        } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 500);
-        }
+        $userEmotions = UserEmotion::where('user_id', $user_id)->get();
+        return response()->json(['user_emotions' => $userEmotions], 200);
     }
 
-    public function show($id)
+    /**
+     * Store a newly created resource in storage.
+     */
+    // public function store(Request $request)
+    // {
+    //     $request->validate([
+    //         'user_id' => 'required|integer',
+    //         'emotion_id' => 'required|integer',
+    //         'intensity' => 'required|in:alta,media,baja', // Valida la intensidad
+    //         'journal_date' => 'required|date',
+    //     ]);
+
+    //     $userEmotion = UserEmotion::create($request->all());
+    //     return response()->json(['user_emotion' => $userEmotion], 201);
+    // }
+
+    public function store(Request $request)
+{
+    $userEmotion = UserEmotion::updateOrCreate(
+        ['user_id' => $request->user_id, 'emotion_id' => $request->emotion_id],
+        ['intensity' => $request->intensity]
+    );
+
+    return response()->json(['userEmotion' => $userEmotion], 201);
+}
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(string $id)
     {
-        try {
-            $userEmotion = UserEmotion::with('user', 'emotion')->find($id);
-            return response()->json(['userEmotion' => $userEmotion]);
-        } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 500);
-        }
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'intensity' => 'required|in:alta,media,baja', // Valida la intensidad
+        ]);
+
+        $userEmotion = UserEmotion::findOrFail($id);
+        $userEmotion->update(['intensity' => $request->input('intensity')]);
+        return response()->json(['user_emotion' => $userEmotion], 200);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy($id)
+    {
+        $userEmotion = UserEmotion::findOrFail($id);
+        $userEmotion->delete();
+        return response()->json(['message' => 'User emotion deleted successfully'], 204);
     }
 }
