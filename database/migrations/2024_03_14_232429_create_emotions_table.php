@@ -12,8 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('emotions', function (Blueprint $table) {
-            $table->bigIncrements('emotion_id');
+            $table->bigIncrements('id');
             $table->string('emotion');
+            $table->string('emotion_url');
             $table->timestamps();
         });
     }

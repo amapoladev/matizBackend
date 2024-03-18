@@ -24,8 +24,8 @@ class UserEmotionFactory extends Factory
     public function definition()
     {
         return [
-            'user_id' => $this->faker->numberBetween(1, 10), // Assuming you have users seeded with IDs from 1 to 10
-            'emotion_id' => $this->faker->numberBetween(1, 10), // Assuming you have emotions seeded with IDs from 1 to 10
+            'user_id' => \App\Models\User::inRandomOrder()->first()->id,
+            'emotion_id' => \App\Models\Emotion::inRandomOrder()->first()->id,
         ];
     }
 }

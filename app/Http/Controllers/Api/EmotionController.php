@@ -33,6 +33,7 @@ class EmotionController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'emotion' => 'required|string',
+            'emotion_url' => 'nullable|url', // Asegúrate de validar el campo emotion_url
         ]);
 
         if ($validator->fails()) {
@@ -40,7 +41,7 @@ class EmotionController extends Controller
         }
 
         try {
-            $emotion = Emotion::create($request->only('emotion'));
+            $emotion = Emotion::create($request->only('emotion', 'emotion_url')); // Incluye emotion_url
             return response()->json(['emotion' => $emotion], 201);
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
@@ -51,6 +52,7 @@ class EmotionController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'emotion' => 'required|string',
+            'emotion_url' => 'nullable|url', // Asegúrate de validar el campo emotion_url
         ]);
 
         if ($validator->fails()) {
@@ -59,7 +61,7 @@ class EmotionController extends Controller
 
         try {
             $emotion = Emotion::findOrFail($id);
-            $emotion->update($request->only('emotion'));
+            $emotion->update($request->only('emotion', 'emotion_url')); // Incluye emotion_url
             return response()->json(['emotion' => $emotion]);
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);

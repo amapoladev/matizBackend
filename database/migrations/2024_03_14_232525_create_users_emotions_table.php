@@ -14,11 +14,17 @@ return new class extends Migration
         Schema::create('users_emotions', function (Blueprint $table) {
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('emotion_id');
-            $table->foreign('user_id')->references('user_id')->on('users');
-            $table->foreign('emotion_id')->references('emotion_id')->on('emotions');
-
-            $table->primary(['user_id', 'emotion_id']);
-            $table->timestamps(); 
+            
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('emotion_id')->references('id')->on('emotions')->onDelete('cascade');
+        
+            // No necesitamos una clave primaria independiente en la tabla pivote
+            // La combinación de user_id y emotion_id servirá como clave primaria compuesta
+        
+            // Opcionalmente, puedes agregar índices únicos para prevenir la duplicación de registros
+            // $table->unique(['user_id', 'emotion_id']);
+        
+            $table->timestamps();
         });
     }
 

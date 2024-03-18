@@ -2,22 +2,28 @@
 
 namespace Database\Factories;
 
+use App\Models\Emotion;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Emotion>
- */
 class EmotionFactory extends Factory
 {
     /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = Emotion::class;
+
+    /**
      * Define the model's default state.
      *
-     * @return array<string, mixed>
+     * @return array
      */
-    public function definition(): array
+    public function definition()
     {
         return [
-            'emotion_id'=> \App\Models\Emotion::pluck('id')->random(),
+            'emotion' => $this->faker->word, // Puedes usar faker para generar palabras aleatorias como emociones
+            'emotion_url' => 'https://picsum.photos/200/300', // Genera una URL de imagen aleatoria
         ];
     }
 }
