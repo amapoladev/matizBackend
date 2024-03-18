@@ -36,13 +36,13 @@ Route::controller(EmotionController::class)->group(function () {
     Route::delete('/emotions/{id}', [EmotionController::class, 'destroy']);
 });
 
-Route::controller(UserEmotionController::class)->group(function () {
-    Route::get('/usersemotions', 'index');
-    Route::get('/usersemotions/{id}', [UserEmotionController::class, 'show']);
-    Route::post('/usersemotions', [UserEmotionController::class, 'store']);
-    Route::put('/usersemotions/{id}', [UserEmotionController::class, 'update']);
-    Route::delete('/usersemotions/{id}', [UserEmotionController::class, 'destroy']);
-});
+// Route::controller(UserEmotionController::class)->group(function () {
+//     Route::get('/usersemotions', 'index');
+//     Route::get('/usersemotions/{id}', [UserEmotionController::class, 'show']);
+//     Route::post('/usersemotions', [UserEmotionController::class, 'store']);
+//     Route::put('/usersemotions/{id}', [UserEmotionController::class, 'update']);
+//     Route::delete('/usersemotions/{id}', [UserEmotionController::class, 'destroy']);
+// });
 
 Route::controller(JournalController::class)->group(function () {
     Route::get('/journals', 'index');
