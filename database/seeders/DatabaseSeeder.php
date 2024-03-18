@@ -12,7 +12,8 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             IntensitySeeder::class,
             EmotionSeeder::class,
-            UserEmotionSeeder::class
+            UserEmotionSeeder::class,
+            JournalSeeder::class
         ]);
     }
 }

@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\EmotionController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\IntensityController;
+use App\Http\Controllers\Api\JournalController;
 use App\Http\Controllers\UserEmotionController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -43,3 +44,10 @@ Route::controller(UserEmotionController::class)->group(function () {
     Route::delete('/usersemotions/{id}', [UserEmotionController::class, 'destroy']);
 });
 
+Route::controller(JournalController::class)->group(function () {
+    Route::get('/journals', 'index');
+    Route::get('/journals/{id}', [JournalController::class, 'show']);
+    Route::post('/journals', [JournalController::class, 'store']);
+    Route::put('/journals/{id}', [JournalController::class, 'update']);
+    Route::delete('/journals/{id}', [JournalController::class, 'destroy']);
+});

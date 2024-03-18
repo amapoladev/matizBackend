@@ -8,14 +8,20 @@ use Illuminate\Database\Eloquent\Model;
 class Emotion extends Model
 {
     use HasFactory;
-    
+
     protected $fillable = [
         'emotion',
         'emotion_url'
     ];
-    
+
     public function users()
     {
-        return $this->belongsToMany(User::class, 'users_emotions', 'emotion_id', 'user_id');
+        return $this->belongsToMany(User::class, 'users_emotions');
     }
+
+    public function intensity()
+    {
+        return $this->belongsTo(Intensity::class);
+    }
+
 }

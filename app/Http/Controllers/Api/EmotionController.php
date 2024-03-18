@@ -12,17 +12,27 @@ class EmotionController extends Controller
     public function index()
     {
         try {
-            $emotions = Emotion::all();
+            $emotions = Emotion::with('users')->get();
             return response()->json(['emotions' => $emotions]);
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }
 
-    public function show($id)
+    public function getUsers($id)
     {
         try {
             $emotion = Emotion::findOrFail($id);
+            return response()->json(['users' => $emotion->users]);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+    
+    public function show($id)
+    {
+        try {
+            $emotion = Emotion::with('users')->find($id);
             return response()->json(['emotion' => $emotion]);
         } catch (\Exception $e) {
             return response()->json(['error' => 'Emotion not found'], 404);

@@ -15,14 +15,51 @@ class UserController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-    {
-        {
+    { {
             try {
-                $users = User::all();
+                $users = User::with('emotions')->get();
                 return response()->json(['status' => 200, 'data' => $users]);
             } catch (Exception $e) {
                 return response()->json(['status' => 204, 'message' => $e->getMessage()], 204);
             }
+        }
+
+    }
+
+
+    public function getEmotions($id)
+    {
+        try {
+            $user = User::findOrFail($id);
+            return response()->json(['emotions' => $user->emotions]);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+
+    public function assignEmotion(Request $request, $id)
+    {
+        $emotionId = $request->input('emotion_id');
+
+        try {
+            $user = User::findOrFail($id);
+            $user->emotions()->attach($emotionId);
+            return response()->json(['message' => 'Emotion assigned successfully']);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+
+    public function removeEmotion(Request $request, $id)
+    {
+        $emotionId = $request->input('emotion_id');
+
+        try {
+            $user = User::findOrFail($id);
+            $user->emotions()->detach($emotionId);
+            return response()->json(['message' => 'Emotion removed successfully']);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
         }
     }
 
@@ -54,7 +91,6 @@ class UserController extends Controller
             // En caso de error, retornar una respuesta de error con el mensaje del error y código 500 (error interno del servidor)
             return response()->json(['error' => $e->getMessage()], 500);
         }
-    
     }
 
     /**
@@ -64,7 +100,7 @@ class UserController extends Controller
     {
         try {
             // Buscar el usuario por su ID
-            $user = User::find($id);
+            $user = User::with('emotions')->find($id);
 
             // Verificar si el usuario existe
             if (!$user) {

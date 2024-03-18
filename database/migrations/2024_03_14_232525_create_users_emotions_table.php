@@ -17,13 +17,6 @@ return new class extends Migration
             
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('emotion_id')->references('id')->on('emotions')->onDelete('cascade');
-        
-            // No necesitamos una clave primaria independiente en la tabla pivote
-            // La combinación de user_id y emotion_id servirá como clave primaria compuesta
-        
-            // Opcionalmente, puedes agregar índices únicos para prevenir la duplicación de registros
-            // $table->unique(['user_id', 'emotion_id']);
-        
             $table->timestamps();
         });
     }
