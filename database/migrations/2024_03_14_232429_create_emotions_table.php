@@ -15,6 +15,7 @@ return new class extends Migration
             $table->bigIncrements('id');
             $table->string('emotion');
             $table->string('emotion_url');
+            $table->string('public_id')->nullable()->default(null);
             $table->timestamps();
         });
     }

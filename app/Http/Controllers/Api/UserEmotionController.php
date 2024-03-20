@@ -34,14 +34,17 @@ class UserEmotionController extends Controller
     // }
 
     public function store(Request $request)
-{
-    $userEmotion = UserEmotion::updateOrCreate(
-        ['user_id' => $request->user_id, 'emotion_id' => $request->emotion_id],
-        ['intensity' => $request->intensity]
-    );
-
-    return response()->json(['userEmotion' => $userEmotion], 201);
-}
+    {
+        $request->validate([
+            'user_id' => 'required|integer',
+            'emotion_id' => 'required|integer',
+            'intensity' => 'required|in:alta,media,baja', // Valida la intensidad
+            'journal_date' => 'required|date',
+        ]);
+    
+        $userEmotion = UserEmotion::create($request->all());
+        return response()->json(['user_emotion' => $userEmotion], 201);
+    }
 
     /**
      * Display the specified resource.

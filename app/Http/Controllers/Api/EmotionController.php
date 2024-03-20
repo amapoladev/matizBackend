@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Emotion;
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
+use Illuminate\Validation\ValidationException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -12,7 +14,7 @@ class EmotionController extends Controller
     public function index()
     {
         try {
-            $emotions = Emotion::with('users')->get();
+            $emotions = Emotion::all();
             return response()->json(['emotions' => $emotions]);
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
@@ -41,22 +43,38 @@ class EmotionController extends Controller
 
     public function store(Request $request)
     {
+        try {
+
         $validator = Validator::make($request->all(), [
             'emotion' => 'required|string',
-            'emotion_url' => 'nullable|url', // Asegúrate de validar el campo emotion_url
+            'image' => 'required|image',
         ]);
-
+    
         if ($validator->fails()) {
-            return response()->json(['error' => $validator->errors()->first()], 400);
+            throw new ValidationException($validator);
         }
-
-        try {
-            $emotion = Emotion::create($request->only('emotion', 'emotion_url')); // Incluye emotion_url
-            return response()->json(['emotion' => $emotion], 201);
-        } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 500);
-        }
+    
+        $file = $request->file('image');
+        $cloudinaryUpload = Cloudinary::upload($file->getRealPath(), ['folder' => 'matizemotionary']);
+    
+                // Verificar la carga exitosa
+                if (!$cloudinaryUpload->getSecurePath() || !$cloudinaryUpload->getPublicId()) {
+                    throw new \Exception('No se ha podido almacenar correctamente la emoción');
+                }
+    
+                // Crear la emoción con la URL de Cloudinary
+                $newemotion = Emotion::create([
+                    'emotion' => $request->input('emotion'),
+                    'emotion_url' => $cloudinaryUpload->getSecurePath(),
+                    'public_id' => $cloudinaryUpload->getPublicId(),
+                ]);
+    
+                return response()->json($newemotion, 201);
+            } catch (\Exception $e) {
+                return response()->json(['error' => $e->getMessage()], 500);
+            }
     }
+
 
     public function update(Request $request, $id)
     {

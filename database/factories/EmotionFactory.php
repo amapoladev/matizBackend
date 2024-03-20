@@ -22,8 +22,9 @@ class EmotionFactory extends Factory
     public function definition()
     {
         return [
-            'emotion' => $this->faker->word, // Puedes usar faker para generar palabras aleatorias como emociones
-            'emotion_url' => 'https://picsum.photos/200/300', // Genera una URL de imagen aleatoria
+            'emotion' => $this->faker->word,
+            'emotion_url' => $this->faker->url(),
+            'public_id' => $this->faker->uuid,
         ];
     }
 }

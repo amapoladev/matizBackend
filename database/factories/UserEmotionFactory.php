@@ -27,6 +27,7 @@ class UserEmotionFactory extends Factory
             'user_id' => \App\Models\User::inRandomOrder()->first()->id,
             'emotion_id' => \App\Models\Emotion::inRandomOrder()->first()->id,
             'intensity' => $this->faker->randomElement(['alta', 'media', 'baja']),
+            'journal_date' => $this->faker->date(),
         ];
     }
 }
