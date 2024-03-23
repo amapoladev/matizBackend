@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Rol;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -28,8 +29,11 @@ class UserFactory extends Factory
             'lastname' => fake()->lastName(),
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
-            'password' => static::$password ??= Hash::make('password'),
-            'remember_token' => Str::of(random_int(1000, 9999))->toString(),
+            // Genera una contraseña de 4 dígitos
+            'password' => static::$password ??= rand(1000, 9999),
+            // Genera un token con hash
+            'remember_token' => Hash::make(Str::random(10)),
+            'rol_id' => Rol::all()->random()->id,
         ];
     }
 

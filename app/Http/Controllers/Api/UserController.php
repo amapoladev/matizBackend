@@ -11,6 +11,40 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
+    public function login(Request $request)
+{   
+    try{
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required|digits:4'
+        ]);
+
+        $user = User::where('email', '=', $request->email)->first();
+        
+        if (!$user) {
+            return response()->json(['status' => 0, 'msg' => 'Credenciales incorrectas'], 401);
+        }
+    
+        // Verificar si el password no es un hash y tiene solo 4 números
+        if (!Hash::needsRehash($user->password) && strlen($request->password) === 4 && ctype_digit($request->password)) {
+            $token = $user->createToken('auth_token')->plainTextToken;
+
+             return response()->json([
+            'status' => 1,
+            'msg' => 'Inicio de sesión correctamente',
+            'access_token' => $token,
+            'user_id' => $user->id
+            ], 200);
+
+        } else {
+            return response()->json(['status' => 0, 'msg' => 'Credenciales incorrectas'], 401);
+        }
+        
+    } catch (\Exception $e) {
+        return response()->json(['status' => 0, 'msg' => 'Error al iniciar sesión'], 500);
+    }
+}
+
     /**
      * Display a listing of the resource.
      */
@@ -74,7 +108,7 @@ class UserController extends Controller
                 'name' => 'required',
                 'lastname' => 'required',
                 'email' => 'required|email|unique:users',
-                'password' => 'required|min:6',
+                'password' => 'required|min:4',
             ]);
 
             // Crear un nuevo usuario

@@ -5,13 +5,23 @@ use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\IntensityController;
 use App\Http\Controllers\Api\JournalController;
 use App\Http\Controllers\Api\UserEmotionController;
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\Auth\RegisteredUserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/user', function (Request $request) {
-    return $request->user();
-})->middleware('auth:sanctum');
+Route::post('/login', [AuthenticatedSessionController::class, 'store'])
+->middleware('guest')
+->name('login');
 
+Route::post('/register', [RegisteredUserController::class, 'store'])
+->middleware('guest')
+->name('register');
+
+Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
+    ->middleware('auth:sanctum')
+    ->name('logout');
+   
 Route::controller(UserController::class)->group(function () {
     Route::get('/users', 'index');
     Route::post('/users', [UserController::class, 'store']);
@@ -28,7 +38,7 @@ Route::controller(IntensityController::class)->group(function () {
     Route::delete('/intensities/{id}', [IntensityController::class, 'destroy']);
 });
 
-Route::controller(EmotionController::class)->group(function () {
+Route::middleware(['auth:sanctum', 'Child'])->group(function () {
     Route::get('/emotions', 'index');
     Route::get('/emotions/{id}', [EmotionController::class, 'show']);
     Route::post('/emotions', [EmotionController::class, 'store']);
@@ -41,7 +51,7 @@ Route::post('/user-emotions', [UserEmotionController::class, 'store']);
 Route::put('/user-emotions/{id}', [UserEmotionController::class, 'update']);
 Route::delete('/user-emotions/{id}', [UserEmotionController::class, 'destroy']);
 
-Route::controller(JournalController::class)->group(function () {
+Route::middleware(['auth:sanctum', 'Child'])->group(function () {
     Route::get('/journals', 'index');
     Route::get('/journals/{id}', [JournalController::class, 'show']);
     Route::post('/journals', [JournalController::class, 'store']);

@@ -21,11 +21,16 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
-        'password' => 'hashed',
+        'password' => 'string',
     ];
 
     public function emotions()
     {
         return $this->belongsToMany(Emotion::class, 'users_emotions');
+    }
+
+    public function rol()
+    {
+        return $this->belongsTo(Rol::class);
     }
 }
