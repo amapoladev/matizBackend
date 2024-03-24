@@ -24,8 +24,14 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
+    // public function emotions()
+    // {
+    //     return $this->belongsToMany(Emotion::class, 'users_emotions');
+    // }
+
     public function emotions()
     {
-        return $this->belongsToMany(Emotion::class, 'users_emotions');
+        return $this->belongsToMany(Emotion::class, 'users_emotions')
+            ->withPivot('intensity', 'journal_date');
     }
 }
