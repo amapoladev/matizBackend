@@ -15,9 +15,11 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->string('feelingsnotes');
-            $table->date('journal_date'); // Columna para la fecha del diario
+            $table->date('journal_date');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->unique(['user_id', 'journal_date']); // Clave primaria compuesta
+            $table->foreignId('intensity_id')->constrained('intensities');
+            $table->foreignId('emotion_id')->constrained('emotions');
+            $table->unique(['user_id', 'journal_date']);
             $table->timestamps();
         });
     }

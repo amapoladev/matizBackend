@@ -19,4 +19,14 @@ class Journal extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function intensity()
+    {
+        return $this->belongsTo(Intensity::class);
+    }
+
+    public function emotion()
+    {
+        return $this->belongsTo(Emotion::class);
+    }
 }
