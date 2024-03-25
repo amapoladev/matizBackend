@@ -43,8 +43,8 @@ return new class extends Migration
         // Ajusta la restricción de unicidad para la combinación de user_id, emotion_id, journal_date e intensity
         $table->unique(['user_id', 'emotion_id', 'journal_date', 'intensity']);
     
-        $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-        $table->foreign('emotion_id')->references('id')->on('emotions')->onDelete('cascade');
+        $table->foreign('user_id')->references('user_id')->on('journals')->onDelete('cascade');
+        $table->foreign('emotion_id')->references('emotion_id')->on('journals')->onDelete('cascade');
     });
     }
     /**

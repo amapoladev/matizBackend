@@ -6,32 +6,52 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use App\Models\Emotion;
+use Laravel\Sanctum\HasApiTokens;
+
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable;
-
-    // ...
+    use HasApiTokens, HasFactory, Notifiable;
 
     /**
-     * Get the attributes that should be cast.
+     * The attributes that are mass assignable.
      *
-     * @return array<string, string>
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'name',
+        'email',
+        'password',
+    ];
+    //campos que son rellenables
+
+    /**
+     * The attributes that should be hidden for serialization.
+     *
+     * @var array<int, string>
+     */
+    protected $hidden = [
+        'password',
+        'remember_token',
+    ];
+//campos que no queremos que se vean
+
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array<string, string>
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
 
-    // public function emotions()
-    // {
-    //     return $this->belongsToMany(Emotion::class, 'users_emotions');
-    // }
-
     public function emotions()
     {
         return $this->belongsToMany(Emotion::class, 'users_emotions')
-            ->withPivot('intensity', 'journal_date');
+                    ->withPivot('intensity', 'journal_date')
+                    ->withTimestamps();
     }
+
+  
 }

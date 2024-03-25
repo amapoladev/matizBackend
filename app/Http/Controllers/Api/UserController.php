@@ -26,6 +26,28 @@ class UserController extends Controller
 
     }
 
+    protected function register(Request $request)
+{
+    $validatedData = $request->validate([
+        'name' => 'required|string|max:255',
+        'lastname' => 'required|string|max:255',
+        'email' => 'required|string|email|max:255|unique:users',
+        'password' => 'required|string|digits:4|confirmed',
+    ]);
+
+    $user = User::create([
+        'name' => $validatedData['name'],
+        'lastname' => $validatedData['lastname'],
+        'email' => $validatedData['email'],
+        'email_verified_at' => now(),
+        'password' => Hash::make($validatedData['password']),
+    ]);
+
+    $token = $user->createToken('authToken')->plainTextToken;
+
+    return response()->json(['message' => 'User registered successfully', 'token' => $token], 201);
+}
+
 
     public function getEmotions($id)
     {
@@ -36,6 +58,40 @@ class UserController extends Controller
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }
+
+    public function login(Request $request)
+    {   
+        try{
+            $request->validate([
+                'email' => 'required|email',
+                'password' => 'required'
+            ]);
+
+            $user = User::where('email', '=', $request->email)->first();
+            
+            if (!$user) {
+                return response()->json(['status' => 0, 'msg' => 'Credenciales incorrectas'], 401);
+            }
+        
+            if (Hash::check($request->password, $user->password)) {
+                $token = $user->createToken('auth_token')->plainTextToken;
+
+                 return response()->json([
+                'status' => 1,
+                'msg' => 'Inicio de sesión correctamente',
+                'access_token' => $token,
+                'user_id' => $user->id
+                ], 200);
+
+            }else{
+                return response()->json(['status' => 0, 'msg' => 'Credenciales incorrectas'], 401);
+            }
+            
+        }catch (\Exception $e) {
+            return response()->json(['status' => 0, 'msg' => 'Error al iniciar sesión'], 500);
+        }
+    }
+
 
     public function assignEmotion(Request $request, $id)
     {

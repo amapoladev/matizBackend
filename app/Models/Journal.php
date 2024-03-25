@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -12,7 +11,9 @@ class Journal extends Model
     protected $fillable = [
         'user_id',
         'feelingsnotes',
-        'date'
+        'emotion_id',
+        'journal_date',
+        'intensity_id', 
     ];
 
     public function user()
@@ -25,8 +26,10 @@ class Journal extends Model
         return $this->belongsTo(Intensity::class);
     }
 
-    public function emotion()
+    public function emotions()
     {
-        return $this->belongsTo(Emotion::class);
+        return $this->belongsToMany(Emotion::class, 'users_emotions')
+                    ->withPivot('intensity', 'journal_date')
+                    ->withTimestamps();
     }
 }
