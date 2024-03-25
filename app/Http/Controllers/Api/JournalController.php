@@ -33,47 +33,6 @@ class JournalController extends Controller
         }
     }
 
-    // public function store(Request $request)
-    // {
-    //     $validator = Validator::make($request->all(), [
-    //         'user_id' => 'required|integer',
-    //         'feelingsnotes' => 'required|string',
-    //         'date' => 'required|date',
-    //     ]);
-
-    //     if ($validator->fails()) {
-    //         return response()->json(['error' => $validator->errors()->first()], 400);
-    //     }
-
-    //     try {
-    //         $journal = Journal::create($request->all());
-    //         return response()->json(['journal' => $journal], 201);
-    //     } catch (\Exception $e) {
-    //         return response()->json(['error' => $e->getMessage()], 500);
-    //     }
-    // }
-
-    // STORE3 QUE FUNCIONABA
-    // public function store(Request $request)
-    // {
-    //     $validator = Validator::make($request->all(), [
-    //         'user_id' => 'required|integer',
-    //         'feelingsnotes' => 'required|string',
-    //         'journal_date' => 'required|date|unique:journals,user_id,NULL,id,journal_date,' . $request->input('journal_date'),
-    //     ]);
-
-    //     if ($validator->fails()) {
-    //         return response()->json(['error' => $validator->errors()->first()], 400);
-    //     }
-
-    //     try {
-    //         $journal = Journal::create($request->all());
-    //         return response()->json(['journal' => $journal], 201);
-    //     } catch (\Exception $e) {
-    //         return response()->json(['error' => $e->getMessage()], 500);
-    //     }
-    // }
-
     public function store(Request $request)
     {
         // Validación de los datos recibidos en el formulario
@@ -108,27 +67,6 @@ class JournalController extends Controller
         }
     }
 
-
-    // public function update(Request $request, $id)
-    // {
-    //     $validator = Validator::make($request->all(), [
-    //         'user_id' => 'required|integer',
-    //         'feelingsnotes' => 'required|string',
-    //         'date' => 'required|date',
-    //     ]);
-
-    //     if ($validator->fails()) {
-    //         return response()->json(['error' => $validator->errors()->first()], 400);
-    //     }
-
-    //     try {
-    //         $journal = Journal::findOrFail($id);
-    //         $journal->update($request->all());
-    //         return response()->json(['journal' => $journal], 200);
-    //     } catch (\Exception $e) {
-    //         return response()->json(['error' => $e->getMessage()], 500);
-    //     }
-    // }
 
     public function update(Request $request, $id)
 {
