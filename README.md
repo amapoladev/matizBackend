@@ -1,66 +1,99 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+# Api MatizWeb
 
-## About Laravel
+Matiz API Backend es una API RESTful construida con Laravel 9 y MySQL, que proporciona las funcionalidades necesarias para el proyecto Matiz.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 🔧 Tecnologías utilizadas
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- **Laravel 10.10**: Como framework PHP para construir la API.
+- **MySQL**: Como sistema de gestión de base de datos.
+- **PHP 8.2**: Como lenguaje de programación.
+- **Composer**: Como gestor de dependencias.
+- **github**: Control de versiones.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## 📥 Requisitos previos
 
-## Learning Laravel
+- PHP 8.2 o superior
+- Composer
+- MySQL 8.0 o superior
+- Git
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## 💻 Instalación
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+1. Clona el repositorio en tu máquina local:
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+git clone https://github.com/MatizEmociones/matizBackend.git
 
-## Laravel Sponsors
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+2. Instala las dependencias con Composer:
 
-### Premium Partners
+composer install
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
 
-## Contributing
+3. Duplica el archivo `.env.example` y renómbralo a `.env`. Configura la base de datos y otras variables según sea necesario.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+4. Genera la clave de la aplicación:
 
-## Code of Conduct
+php artisan key:generate
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
 
-## Security Vulnerabilities
+5. Migrar la base de datos:
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+php artisan migrate
 
-## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+6. Inicia el servidor de desarrollo:
+
+php artisan serve
+
+
+### Endpoints
+
+A continuación, se presentan los endpoints disponibles en la API.
+
+#### Autenticación
+
+Rutas de JournalController
+
+    GET /journals: Devuelve una lista de todos los diarios.
+    GET /journals/{id}: Devuelve los detalles de un diario específico.
+    POST /journals: Crea un nuevo diario.
+    PUT /journals/{id}: Actualiza un diario específico.
+    DELETE /journals/{id}: Elimina un diario específico.
+
+Rutas de EmotionController
+
+    GET /emotions: Devuelve una lista de todas las emociones.
+    GET /emotions/{id}: Devuelve los detalles de una emoción específica.
+    POST /emotions: Crea una nueva emoción.
+    PUT /emotions/{id}: Actualiza una emoción específica.
+    DELETE /emotions/{id}: Elimina una emoción específica.
+
+    Rutas de IntensityController
+
+    GET /intensities: Devuelve una lista de todas las intensidades.
+    GET /intensities/{id}: Devuelve los detalles de una intensidad específica.
+    POST /intensities: Crea una nueva intensidad.
+    PUT /intensities/{id}: Actualiza una intensidad específica.
+    DELETE /intensities/{id}: Elimina una intensidad específica.
+
+
+## 📝 Contribuciones
+
+Si deseas contribuir al proyecto, sigue las siguientes pautas:
+
+1. Fork el proyecto.
+2. Crea una rama de características (`git checkout -b feature/nombre-de-la-caracteristica`).
+3. Realiza tus cambios y haz un commit (`git commit -m 'Agregar nueva característica'`).
+4. Púllalo a la rama principal (`git pull origin main`).
+5. Realiza un push a tu rama (`git push origin feature/nombre-de-la-caracteristica`).
+6. Abre una solicitud de extracción.
+
+## 📝 Licencia
+
+Este proyecto está bajo la Licencia [MIT](https://github.com/usuario/matiz-api-backend/blob/main/LICENSE).
+
+## 👥 Autora
+
+- [**Johana Sandoval**](https://github.com/Sandovaljohana)
+
