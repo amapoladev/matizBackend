@@ -29,7 +29,7 @@ class Journal extends Model
     public function emotions()
     {
         return $this->belongsToMany(Emotion::class, 'users_emotions')
-                    ->withPivot('intensity', 'journal_date')
+                    ->withPivot('intensity_id', 'journal_date')
                     ->withTimestamps();
     }
 }

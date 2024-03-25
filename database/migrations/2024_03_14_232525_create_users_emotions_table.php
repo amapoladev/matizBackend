@@ -36,16 +36,16 @@ return new class extends Migration
     Schema::create('users_emotions', function (Blueprint $table) {
         $table->unsignedBigInteger('user_id');
         $table->unsignedBigInteger('emotion_id');
-        $table->enum('intensity', ['alta', 'media', 'baja']); // Agrega la columna para la intensidad
-        $table->date('journal_date'); // Agrega la columna para la fecha del diario
+        $table->enum('intensity', ['alta', 'media', 'baja']);
+        $table->date('journal_date');
         $table->timestamps();
-    
-        // Ajusta la restricción de unicidad para la combinación de user_id, emotion_id, journal_date e intensity
-        $table->unique(['user_id', 'emotion_id', 'journal_date', 'intensity']);
-    
-        $table->foreign('user_id')->references('user_id')->on('journals')->onDelete('cascade');
-        $table->foreign('emotion_id')->references('emotion_id')->on('journals')->onDelete('cascade');
+        
+        $table->unique(['user_id', 'emotion_id', 'journal_date']); // Ajusta la restricción de unicidad
+        
+        $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+        $table->foreign('emotion_id')->references('id')->on('emotions')->onDelete('cascade');
     });
+    
     }
     /**
      * Reverse the migrations.

@@ -22,6 +22,7 @@ return new class extends Migration
             $table->unique(['user_id', 'journal_date']);
             $table->timestamps();
         });
+        
     }
 
     /**
